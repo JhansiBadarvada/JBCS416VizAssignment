@@ -5,10 +5,19 @@
 	 <meta charset="utf-8">
     <title>D3 World Map</title>
     <style>
-      rect {
+       rect {
         stroke: white;
         stroke-width: 0.5px;
         fill: black;
+      };
+      #tooltip {
+        opacity:0;
+        position: absolute;
+        text-align:center;
+        width:60px;
+        height:40px;
+        background:white;
+        border: 0px;
       }
     </style>
     <script src="https://d3js.org/d3.v7.min.js"></script>
