@@ -1,12 +1,13 @@
-const width = 1200;
-const height = 900;
+const width = 1000;
+const height = 600;
 const svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
 const g = svg.append('g');
 
-var data1 = [{x: 50, y: 50, width:145, height:50, text1:'All', tx: 40, ty: 40, type5: 'All'},
-			 {x: 200, y: 50, width:145, height:50, text1:'Gold', tx: 110, ty: 40, type5: 'Gold'},
-			 {x: 350, y: 50, width:145, height:50, text1:'Silver', tx: 180, ty: 40, type5: 'Silver'},
-			 {x: 500, y: 50, width:145, height:50, text1:'Bronze', tx: 250, ty: 40, type5: 'Bronze'}];
+
+var data1 = [{x: 50, y: 50, width:145, height:50, text1:'All', tx: 40, ty: 40, type5: 'Alltext'},
+			 {x: 200, y: 50, width:145, height:50, text1:'Gold', tx: 110, ty: 40, type5: 'Goldtext'},
+			 {x: 350, y: 50, width:145, height:50, text1:'Silver', tx: 180, ty: 40, type5: 'Silvertext'},
+			 {x: 500, y: 50, width:145, height:50, text1:'Bronze', tx: 250, ty: 40, type5: 'Bronzetext'}];
 
 drawSlides() 
 readData(2020, "All")
@@ -15,6 +16,7 @@ readData(2020, "All")
 function drawSlides() { 
 
 	console.log(data1)
+
 	g.selectAll('rect')
 		.data(data1)
 		.enter()
@@ -30,22 +32,92 @@ function drawSlides() {
 		.style('fill', 'white')
 		.on("click", function(d,i) {  
 				console.log("mouse click drawSlides : " + this.id)
+				
+				d3.select(this).style("fill", "#D3D3D3").style('stroke', 'black');
+				(this.id != 'All') ? d3.select('#All').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
+				(this.id != 'Gold') ? d3.select('#Gold').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
+				(this.id != 'Silver') ? d3.select('#Silver').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
+				(this.id != 'Bronze') ? d3.select('#Bronze').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
 				return readData(2020,this.id);
 			}
-			);
+			)
+			.on("mouseover", function(d) {
+				
+				//d3.select(this).style("fill", "grey").style('stroke', 'black');
+				//return readData(2020,this.id);
+			  })                  
+			  .on("mouseout", function(d) {
+				//d3.select(this).style("fill", "white").style('stroke', 'black');
+			  });
 	
 	g.selectAll('text')
 		.data(data1)
 		.enter()
 		.append('text')
+		.attr('id', function(d){return d.type5 })
 		.attr('x', function(d){return d.tx })
 		.attr('y', function(d){return d.ty}) 
 		.text(function(d){return d.text1})
 		.attr('height', function(d){return d.height})
 		.attr("text-anchor", "start")
-		.style('stroke', 'black')
-		.style('fill', 'black')
+		.style('stroke', 'grey')
+		.style('fill', 'grey')
 		.attr("transform", "scale(2)")
+		.on("mouseover", function(d) {
+				
+			d3.select(this).style("fill", "black").style('stroke', 'black');
+			//return readData(2020,this.id);
+		  })                  
+		  .on("mouseout", function(d) {
+			d3.select(this).style("fill", "grey").style('stroke', 'grey');
+		  })
+		  .on("click", function(d,i) {  
+			console.log("mouse click drawSlides text : " + this.id)
+			
+			switch (this.id) {
+				case 'Alltext': 
+					d3.select('#All').style("fill", "#D3D3D3").style('stroke', 'black');
+					readData(2020,this.id);
+					break;
+				case 'Goldtext': 
+					d3.select('#Gold').style("fill", "#D3D3D3").style('stroke', 'black');
+					readData(2020,this.id);
+					break;
+				case 'Silvertext': 
+					d3.select('#Silver').style("fill", "#D3D3D3").style('stroke', 'black');
+					readData(2020,this.id);
+					break;
+				case 'Bronzetext': 
+					d3.select('#Bronze').style("fill", "#D3D3D3").style('stroke', 'black');
+					readData(2020,this.id);
+					break;
+
+			}
+			(this.id != 'Alltext') ? d3.select('#All').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
+			(this.id != 'Goldtext') ? d3.select('#Gold').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
+			(this.id != 'Silvertext') ? d3.select('#Silver').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
+			(this.id != 'Bronzetext') ? d3.select('#Bronze').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
+			switch (this.id) {
+				case 'Alltext': 
+					d3.select('#All').style("fill", "#D3D3D3").style('stroke', 'black');
+					return readData(2020,'All');
+					break;
+				case 'Goldtext': 
+					d3.select('#Gold').style("fill", "#D3D3D3").style('stroke', 'black');
+					return readData(2020,'Gold');
+					break;
+				case 'Silvertext': 
+					d3.select('#Silver').style("fill", "#D3D3D3").style('stroke', 'black');
+					return readData(2020,'Silver');
+					break;
+				case 'Bronzetext': 
+					d3.select('#Bronze').style("fill", "#D3D3D3").style('stroke', 'black');
+					return readData(2020,'Bronze');
+					break;
+
+			}
+		}
+		)
 }
 
 
@@ -84,7 +156,7 @@ function drawChartAll(medalsYr, type) {
 	countries =  [...new Set(medalsYr.map(({Country_Name})=>Country_Name))]
 	console.log("countries = ", countries.sort());
 
-	var tooltip = d3.select("#tooltip");
+
 	
 
 	var ys=d3.scaleLinear()
@@ -101,6 +173,12 @@ function drawChartAll(medalsYr, type) {
 
 	d3.selectAll('#allbars').remove()
 
+	// Define the div for the tooltip
+	var div1 = d3.select("body").append("div")	
+		.attr("class", "tooltip")				
+		.style("opacity", 0);
+
+
 	switch (type) { 
 		case "All" :
 		  g.selectAll('rect')
@@ -115,10 +193,29 @@ function drawChartAll(medalsYr, type) {
 				.style('stroke', 'black')
 				.style('fill', 'blue')
 				.attr("transform", "translate(50,50)")
+				.on("mouseover", function(d) {	
+					console.log("mouse over", this, "srcElement:", d.srcElement.__data__)
+					div1.transition()		
+						.duration(200)		
+						.style("opacity", .9);		
+					div1	.html("</br>" + "</br>" + "</br>"+"Country: " + d.srcElement.__data__.Country_Name + "</br>" + "Total Medals: " + d.srcElement.__data__.All 
+										+ "</br>" + "Gold Medals: " + d.srcElement.__data__.Gold 
+										+ "</br>" + "Silver Medals: " + d.srcElement.__data__.Silver 
+										+ "</br>" + "Bronze Medals: " + d.srcElement.__data__.Bronze)	
+						.style("left", d3.select(this).attr("x") + "px")		
+						.style("top", d3.select(this).attr("y")  + "px")
+						.style("color", 'blue');	
+					})					
+				.on("mouseout", function(d) {		
+					div1.transition()		
+						.duration(500)		
+						.style("opacity", 0);	
+				})
 				.transition()
 					.duration(650)
 					.attr('y', function(d){return 100 + ys(parseInt(d.All))})
 					.attr('height', function(d){return 350-ys(parseInt(d.All)) })
+				
 				;
 			break;
 		case "Gold" :
@@ -134,6 +231,21 @@ function drawChartAll(medalsYr, type) {
 				.style('stroke', 'black')
 				.style('fill', 'gold')
 				.attr("transform", "translate(50,50)")
+				.on("mouseover", function(d) {	
+					console.log("mouse over", this, "srcElement:", d.srcElement.__data__.Gold)
+					div1.transition()		
+						.duration(200)		
+						.style("opacity", .9);		
+					div1	.html("</br>" + "</br>" + "</br>" + "</br>" + "</br>" + "</br>"+"Gold Medals: " + d.srcElement.__data__.Gold)	
+						.style("left", d3.select(this).attr("x") + "px")		
+						.style("top", (d3.select(this).attr("y"))  + "px")
+						.style("color", 'gold');	
+					})					
+				.on("mouseout", function(d) {		
+					div1.transition()		
+						.duration(500)		
+						.style("opacity", 0);	
+				})
 				.transition()
 					.duration(850)
 					.attr('y', function(d){return 100 + ys(parseInt(d.Gold))})
@@ -152,6 +264,21 @@ function drawChartAll(medalsYr, type) {
 				.style('stroke', 'black')
 				.style('fill', 'grey')
 				.attr("transform", "translate(50,50)")
+				.on("mouseover", function(d) {	
+					console.log("mouse over", this, "srcElement:", d.srcElement.__data__.Silver)
+					div1.transition()		
+						.duration(200)		
+						.style("opacity", .9);		
+					div1	.html("</br>" + "</br>" + "</br>"+"</br>" + "</br>" + "</br>" + "Silver Medals: " + d.srcElement.__data__.Silver)	
+						.style("left", d3.select(this).attr("x") + "px")		
+						.style("top", (d3.select(this).attr("y"))  + "px")
+						.style("color", 'silver');	
+					})					
+				.on("mouseout", function(d) {		
+					div1.transition()		
+						.duration(500)		
+						.style("opacity", 0);	
+				})
 				.transition()
 					.duration(650)
 					.attr('y', function(d){return 100 + ys(parseInt(d.Silver))})
@@ -170,6 +297,21 @@ function drawChartAll(medalsYr, type) {
 				.style('stroke', 'black')
 				.style('fill', 'orange')
 				.attr("transform", "translate(50,50)")
+				.on("mouseover", function(d) {	
+					console.log("mouse over", this, "srcElement:", d.srcElement.__data__.Bronze)
+					div1.transition()		
+						.duration(200)		
+						.style("opacity", .9);		
+					div1	.html("</br>" + "</br>" + "</br>"+"</br>" + "</br>" + "</br>" + "Bronze Medals: " + d.srcElement.__data__.Bronze)	
+						.style("left", d3.select(this).attr("x") + "px")		
+						.style("top", (d3.select(this).attr("y"))  + "px")
+						.style("color", 'orange');	
+					})					
+				.on("mouseout", function(d) {		
+					div1.transition()		
+						.duration(500)		
+						.style("opacity", 0);	
+				})
 				.transition()
 					.duration(650)
 					.attr('y', function(d){return 100 + ys(parseInt(d.Bronze))})
