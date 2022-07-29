@@ -195,6 +195,8 @@ function drawChartAll(medalsYr, type) {
 	console.log("countries = ", countries.sort());
 
 
+	top3 = [medalsYrSorted[0], medalsYrSorted[1], medalsYrSorted[2]]
+    console.log("top3", top3)
 	
 
 	var ys=d3.scaleLinear()
@@ -380,7 +382,6 @@ function drawChartAll(medalsYr, type) {
     		.style("text-anchor", "start");
 
 
-	
 	
 
    
