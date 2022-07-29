@@ -1,21 +1,26 @@
-const width = 1000;
+const width = 1600;
 const height = 600;
 const svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
 const g = svg.append('g');
 
 
-var data1 = [{x: 50, y: 50, width:145, height:50, text1:'All', tx: 40, ty: 40, type5: 'Alltext'},
-			 {x: 200, y: 50, width:145, height:50, text1:'Gold', tx: 110, ty: 40, type5: 'Goldtext'},
-			 {x: 350, y: 50, width:145, height:50, text1:'Silver', tx: 180, ty: 40, type5: 'Silvertext'},
-			 {x: 500, y: 50, width:145, height:50, text1:'Bronze', tx: 250, ty: 40, type5: 'Bronzetext'}];
+var data1 = [{x: 30, y: 30, width:100, height:30, text1:'All', tx: 40, ty: 50, type5: 'Alltext', text:'All Medals', f:'#D3D3D3', s:'black'},
+			 {x: 140, y: 30, width:100, height:30, text1:'Gold', tx: 150, ty: 50, type5: 'Goldtext', text:'Gold Medals', f:'white', s:'black'},
+			 {x: 250, y: 30, width:120, height:30, text1:'Silver', tx: 260, ty: 50, type5: 'Silvertext', text:'Silver Medals', f:'white', s:'black'},
+			 {x: 380, y: 30, width:120, height:30, text1:'Bronze', tx: 390, ty: 50, type5: 'Bronzetext', text:'Bronze Medals', f:'white', s:'black'},
+			 ];
 
-drawSlides() 
+drawSlides()
 readData(2020, "All")
 
 
-function drawSlides() { 
+async function drawSlides() { 
 
 	console.log(data1)
+	const readmeds = await d3.csv("data/Summer_olympic_Medals.csv")
+	console.log("readmeds", readmeds)
+	Year =  [...new Set(readmeds.map(({CityYear})=>(CityYear)))]
+	console.log("Year = ", Year.reverse());
 
 	g.selectAll('rect')
 		.data(data1)
@@ -28,17 +33,18 @@ function drawSlides() {
 		.attr('height', function(d){
 								return d.height;
 							})
-		.style('stroke', 'black')
-		.style('fill', 'white')
+		.style('stroke', function(d){	return d.s; })
+		.style('fill', function(d){	return d.f; })
 		.on("click", function(d,i) {  
 				console.log("mouse click drawSlides : " + this.id)
-				
+				selYear = parseInt(d3.select("#selectButton").property("value"))
+				console.log("mouse click drawSlides selYear : " + selYear)
 				d3.select(this).style("fill", "#D3D3D3").style('stroke', 'black');
 				(this.id != 'All') ? d3.select('#All').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
 				(this.id != 'Gold') ? d3.select('#Gold').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
 				(this.id != 'Silver') ? d3.select('#Silver').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
 				(this.id != 'Bronze') ? d3.select('#Bronze').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
-				return readData(2020,this.id);
+				return readData(selYear,this.id);
 			}
 			)
 			.on("mouseover", function(d) {
@@ -57,12 +63,12 @@ function drawSlides() {
 		.attr('id', function(d){return d.type5 })
 		.attr('x', function(d){return d.tx })
 		.attr('y', function(d){return d.ty}) 
-		.text(function(d){return d.text1})
+		.text(function(d){return d.text})
 		.attr('height', function(d){return d.height})
 		.attr("text-anchor", "start")
 		.style('stroke', 'grey')
 		.style('fill', 'grey')
-		.attr("transform", "scale(2)")
+		.attr("transform", "scale(1)")
 		.on("mouseover", function(d) {
 				
 			d3.select(this).style("fill", "black").style('stroke', 'black');
@@ -74,22 +80,24 @@ function drawSlides() {
 		  .on("click", function(d,i) {  
 			console.log("mouse click drawSlides text : " + this.id)
 			
+			selYear = parseInt(d3.select("#selectButton").property("value"))
+			console.log("mouse click drawSlides selYear : " + selYear)
 			switch (this.id) {
 				case 'Alltext': 
 					d3.select('#All').style("fill", "#D3D3D3").style('stroke', 'black');
-					readData(2020,this.id);
+					readData(selYear,this.id);
 					break;
 				case 'Goldtext': 
 					d3.select('#Gold').style("fill", "#D3D3D3").style('stroke', 'black');
-					readData(2020,this.id);
+					readData(selYear,this.id);
 					break;
 				case 'Silvertext': 
 					d3.select('#Silver').style("fill", "#D3D3D3").style('stroke', 'black');
-					readData(2020,this.id);
+					readData(selYear,this.id);
 					break;
 				case 'Bronzetext': 
 					d3.select('#Bronze').style("fill", "#D3D3D3").style('stroke', 'black');
-					readData(2020,this.id);
+					readData(selYear,this.id);
 					break;
 
 			}
@@ -100,24 +108,46 @@ function drawSlides() {
 			switch (this.id) {
 				case 'Alltext': 
 					d3.select('#All').style("fill", "#D3D3D3").style('stroke', 'black');
-					return readData(2020,'All');
+					return readData(selYear,'All');
 					break;
 				case 'Goldtext': 
 					d3.select('#Gold').style("fill", "#D3D3D3").style('stroke', 'black');
-					return readData(2020,'Gold');
+					return readData(selYear,'Gold');
 					break;
 				case 'Silvertext': 
 					d3.select('#Silver').style("fill", "#D3D3D3").style('stroke', 'black');
-					return readData(2020,'Silver');
+					return readData(selYear,'Silver');
 					break;
 				case 'Bronzetext': 
 					d3.select('#Bronze').style("fill", "#D3D3D3").style('stroke', 'black');
-					return readData(2020,'Bronze');
+					return readData(selYear,'Bronze');
 					break;
 
 			}
 		}
-		)
+		);
+
+	var dropdownChange = function(d) {
+		console.log("dropdown change", d, this.value)
+		d3.select('#All').style("fill", "#D3D3D3").style('stroke', 'black')
+		d3.select('#Gold').style("fill", "white").style('stroke', 'black')
+		d3.select('#Silver').style("fill", "white").style('stroke', 'black')
+		d3.select('#Bronze').style("fill", "white").style('stroke', 'black')
+
+		readData(this.value,'All');
+	}
+
+	var dropDown = d3.select("#selectButton")
+					.on("change", dropdownChange);
+	
+					
+	dropDown.selectAll('option')
+		.data(Year)
+		.enter().append('option')
+		.attr('value', function(d) { return d.substring(d.length - 4) ; console.log("year substring", d.substring(d.length - 4))})
+		.text(function(d){ return (d)});
+
+	
 }
 
 
@@ -125,7 +155,7 @@ async function readData(yr, type) {
 	const meds = await d3.csv("data/Summer_olympic_Medals.csv")
 	//console.log("Async Read 2020 data function", meds.filter(meds=>meds.Year == 2020 && meds.All != 0))
 	medalsYr = meds.filter(meds=>meds.Year == "2020")
-	console.log("medalsYr", medalsYr)
+	console.log("medalsYr", medalsYr.sort(function(x, y){return d3.descending(x.Value, y.Value);}))
 	console.log("readData- type", type)
 	console.log("readData- year", yr)
 	drawChartAll(medalsYr, type)
@@ -182,7 +212,7 @@ function drawChartAll(medalsYr, type) {
 	switch (type) { 
 		case "All" :
 		  g.selectAll('rect')
-				.data(medalsYr)
+				.data(medalsYr.sort(function(x, y){return d3.descending(x.Value, y.Value);}))
 				.enter()
 				.append('rect')
 				.attr('id','allbars')
@@ -340,5 +370,32 @@ function drawChartAll(medalsYr, type) {
     		.attr("dy", ".35em")
     		.attr("transform", "rotate(90)")
     		.style("text-anchor", "start");
+
+
+	// Features of the annotation
+	const annotations = [
+		{
+		note: {
+		  label: "Top 1",
+		  title: "France product sales",
+		  wrap: 200,  // try something smaller to see text split in several lines
+		  padding: 10   // More = text lower
+		  
+		},
+		color: ["#cc0000"],
+		x: xs('China'),
+		y: ys(88),
+		dy: 100,
+		dx: 100
+	  }
+	]
+	
+	// Add annotation to the chart
+	const makeAnnotations = d3.annotation()
+	  .annotations(annotations)
+	  g.call(makeAnnotations)
+	
+	
+
    
 }
