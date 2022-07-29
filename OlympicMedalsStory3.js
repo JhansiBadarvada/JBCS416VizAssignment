@@ -167,23 +167,30 @@ function drawChartAll(medalsYr, type) {
 	console.log("medalsYrDrawChart", medalsYr)
 	console.log("type = ", type);
 	
+    var medalsYrSorted
+
 	switch (type) { 
 		case "All" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.All)})
+            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(x.All) - parseInt(y.All));})
 			break;
 		case "Gold" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.Gold)})
+            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(x.Gold) - parseInt(y.Gold));})
 			break;
 		case "Silver" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.Silver)})
+            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(x.Silver) - parseInt(y.Silver));})
 			break;
 		case "Bronze" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.Bronze)})
+            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(x.Bronze) - parseInt(y.Bronze));})
 			break;
 
 	}
 
 	console.log("medalsYr.All", wMax)
+    console.log("medalsYr.Sorted", medalsYrSorted)
 	countries =  [...new Set(medalsYr.map(({Country_Name})=>Country_Name))]
 	console.log("countries = ", countries.sort());
 
