@@ -147,6 +147,7 @@ async function drawSlides() {
 		.attr('value', function(d) { return d.substring(d.length - 4) ; console.log("year substring", d.substring(d.length - 4))})
 		.text(function(d){ return (d)});
 
+		
 	
 }
 
@@ -375,25 +376,40 @@ function drawChartAll(medalsYr, type) {
 	// Features of the annotation
 	const annotations = [
 		{
-		note: {
-		  label: "Top 1",
-		  title: "France product sales",
-		  wrap: 200,  // try something smaller to see text split in several lines
-		  padding: 10   // More = text lower
-		  
+		  subject: {
+			text: "1",
+			x: "right" //badges have an x of "left" or "right"
+		  },
+		  data: { x: "China", y: 88}
 		},
-		color: ["#cc0000"],
-		x: xs('China'),
-		y: ys(88),
-		dy: 100,
-		dx: 100
-	  }
+		{
+		  subject: { text: "2" },
+		  data: { x: "ROC", y: 71}
+		},
+		{
+		  subject: {
+			text: "3",
+			y: "bottom" //badges have a y of "top" or "bottom"
+		  },
+		  data: { x: "Great Britian", y: 65}
+		}
 	]
-	
-	// Add annotation to the chart
-	const makeAnnotations = d3.annotation()
-	  .annotations(annotations)
-	  g.call(makeAnnotations)
+
+	  const type = d3.annotationCustomType(
+		d3.annotationBadge, 
+		{"subject":{"radius": 10 }}
+	  )
+
+	  const makeAnnotations = d3.annotation()
+		.type(type)
+		.accessors({ 
+		  x: function(d){ return x(new xs(d.x))},
+		  y: function(d){ return ys(d.y) }
+		})
+		.annotations(annotations)
+
+	  g.attr("class", "annotation-group")
+		.call(makeAnnotations)
 	
 	
 
