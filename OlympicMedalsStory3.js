@@ -172,19 +172,19 @@ function drawChartAll(medalsYr, type) {
 	switch (type) { 
 		case "All" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.All)})
-            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(x.All) - parseInt(y.All));})
+            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(y.All) - parseInt(x.All));})
 			break;
 		case "Gold" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.Gold)})
-            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(x.Gold) - parseInt(y.Gold));})
+            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(y.Gold) - parseInt(x.Gold));})
 			break;
 		case "Silver" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.Silver)})
-            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(x.Silver) - parseInt(y.Silver));})
+            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(y.Silver) - parseInt(x.Silver));})
 			break;
 		case "Bronze" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.Bronze)})
-            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(x.Bronze) - parseInt(y.Bronze));})
+            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(y.Bronze) - parseInt(x.Bronze));})
 			break;
 
 	}
