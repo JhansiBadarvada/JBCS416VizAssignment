@@ -156,7 +156,7 @@ async function readData(yr, type) {
 	const meds = await d3.csv("data/Summer_olympic_Medals.csv")
 	//console.log("Async Read 2020 data function", meds.filter(meds=>meds.Year == 2020 && meds.All != 0))
 	medalsYr = meds.filter(meds=>meds.Year == "2020")
-	console.log("medalsYr", medalsYr.sort(function(x, y){return d3.descending(x.Value, y.Value);}))
+	console.log("medalsYr", medalsYr.sort(function(x, y){return x.Value - y.Value;}))
 	console.log("readData- type", type)
 	console.log("readData- year", yr)
 	drawChartAll(medalsYr, type)
@@ -213,7 +213,7 @@ function drawChartAll(medalsYr, type) {
 	switch (type) { 
 		case "All" :
 		  g.selectAll('rect')
-				.data(medalsYr.sort(function(x, y){return d3.descending(x.Value, y.Value);}))
+				.data(medalsYr)
 				.enter()
 				.append('rect')
 				.attr('id','allbars')
@@ -371,6 +371,9 @@ function drawChartAll(medalsYr, type) {
     		.attr("dy", ".35em")
     		.attr("transform", "rotate(90)")
     		.style("text-anchor", "start");
+
+
+	
 	
 
    
