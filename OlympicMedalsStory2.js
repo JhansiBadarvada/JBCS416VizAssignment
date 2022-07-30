@@ -156,7 +156,7 @@ async function readData(yr, type) {
 	const meds = await d3.csv("data/Summer_olympic_Medals.csv")
 	//console.log("Async Read 2020 data function", meds.filter(meds=>meds.Year == 2020 && meds.All != 0))
 	medalsYr = meds.filter(meds=>meds.Year == "2020")
-	console.log("medalsYr", medalsYr.sort(function(x, y){return d3.descending(x.Value, y.Value);}))
+	console.log("medalsYr", medalsYr)
 	console.log("readData- type", type)
 	console.log("readData- year", yr)
 	drawChartAll(medalsYr, type)

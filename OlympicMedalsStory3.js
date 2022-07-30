@@ -37,7 +37,7 @@ async function drawSlides() {
 		.style('fill', function(d){	return d.f; })
 		.on("click", function(d,i) {  
 				console.log("mouse click drawSlides : " + this.id)
-				selYear = parseInt(d3.select("#selectButton").property("value"))
+				selYear = d3.select("#selectButton").property("value")
 				console.log("mouse click drawSlides selYear : " + selYear)
 				d3.select(this).style("fill", "#D3D3D3").style('stroke', 'black');
 				(this.id != 'All') ? d3.select('#All').style("fill", "white").style('stroke', 'black'): console.log("All is not selected");
@@ -80,7 +80,7 @@ async function drawSlides() {
 		  .on("click", function(d,i) {  
 			console.log("mouse click drawSlides text : " + this.id)
 			
-			selYear = parseInt(d3.select("#selectButton").property("value"))
+			selYear = d3.select("#selectButton").property("value")
 			console.log("mouse click drawSlides selYear : " + selYear)
 			switch (this.id) {
 				case 'Alltext': 
@@ -155,8 +155,8 @@ async function drawSlides() {
 async function readData(yr, type) { 
 	const meds = await d3.csv("data/Summer_olympic_Medals.csv")
 	//console.log("Async Read 2020 data function", meds.filter(meds=>meds.Year == 2020 && meds.All != 0))
-	medalsYr = meds.filter(meds=>meds.Year == "2020")
-	console.log("medalsYr", medalsYr.sort(function(x, y){return x.Value - y.Value;}))
+	medalsYr = meds.filter(meds=>meds.Year == yr)
+	console.log("medalsYr", medalsYr)
 	console.log("readData- type", type)
 	console.log("readData- year", yr)
 	drawChartAll(medalsYr, type)
@@ -195,8 +195,8 @@ function drawChartAll(medalsYr, type) {
 	console.log("countries = ", countries.sort());
 
 
-	top3 = [medalsYrSorted[0], medalsYrSorted[1], medalsYrSorted[2]]
-    console.log("top3", top3)
+	//var top3 = [medalsYrSorted[0], medalsYrSorted[1], medalsYrSorted[2]]
+    //console.log("top3", top3)
 	
 
 	var ys=d3.scaleLinear()
@@ -208,7 +208,7 @@ function drawChartAll(medalsYr, type) {
 	var xs=d3.scaleBand()
 				.domain(countries.sort())
 				.range([0, width])
-    			.paddingInner([.2]);
+    			.paddingInner([.1]);
 	band = xs.bandwidth();
 
 	d3.selectAll('#allbars').remove()
@@ -369,11 +369,14 @@ function drawChartAll(medalsYr, type) {
 		.attr("transform", "translate(50,150)")
 		.call(yaxis)
 	
-   
+	d3.select('#xaxis').remove()
+	xaxis = d3.axisBottom(xs).tickValues(null)
+
    d3.select("svg")
 		.append("g")
+		.attr('id', 'xaxis')
 		.attr("transform", "translate(50,500)")
-		.call(d3.axisBottom(xs))
+		.call(xaxis)
 		.selectAll("text")
     		.attr("y", 0)
     		.attr("x", 9)
