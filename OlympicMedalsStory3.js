@@ -388,12 +388,15 @@ function drawChartAll(medalsYr, type) {
     		.attr("dy", ".35em")
     		.attr("transform", "rotate(90)")
     		.style("text-anchor", "start");
+
+	d3.selectAll('#annot').remove()			
 switch (type) { 
 case "All" : 
 	medalsYr.sort(function(x,y){ return parseInt(y.All) - parseInt(x.All)})
 	console.log("medals sorted", medalsYr)
 
 	g.append('rect')
+	  .attr('id', 'annot')
 	  .attr('x', 40 + xs(medalsYr[0].Country_Name))
 	  .attr('y', 100 + ys(parseInt(medalsYr[0].All)))
 	  .attr('height', 30)
@@ -401,6 +404,7 @@ case "All" :
 	  .style('fill', 'red')
 	  
 	 g.append('text')
+	 .attr('id', 'annot')
 	  .text( '1')
 		.attr('x', 50 + xs(medalsYr[0].Country_Name))
 		.attr('y', 120 + ys(parseInt(medalsYr[0].All))) 
@@ -410,6 +414,7 @@ case "All" :
 		.style('fill', 'grey')
     
 		g.append('rect')
+		.attr('id', 'annot')
 		.attr('x', 40 + xs(medalsYr[1].Country_Name))
 		.attr('y', 100 + ys(parseInt(medalsYr[1].All)))
 		.attr('height', 30)
@@ -417,6 +422,7 @@ case "All" :
 		.style('fill', 'red')
 		
 	   g.append('text')
+	   .attr('id', 'annot')
 		.text( '2')
 		  .attr('x', 50 + xs(medalsYr[1].Country_Name))
 		  .attr('y', 120 + ys(parseInt(medalsYr[1].All))) 
@@ -426,6 +432,7 @@ case "All" :
 		  .style('fill', 'grey')
 
 		  g.append('rect')
+		  .attr('id', 'annot')
 		  .attr('x', 40 + xs(medalsYr[2].Country_Name))
 		  .attr('y', 100 + ys(parseInt(medalsYr[2].All)))
 		  .attr('height', 30)
@@ -434,6 +441,7 @@ case "All" :
 		  
 		 g.append('text')
 		  .text( '3')
+		  .attr('id', 'annot')
 			.attr('x', 50 + xs(medalsYr[2].Country_Name))
 			.attr('y', 120 + ys(parseInt(medalsYr[2].All))) 
 			.attr('height', 30)
@@ -446,6 +454,7 @@ case "All" :
 	console.log("medals sorted", medalsYr)
 
 	g.append('rect')
+	.attr('id', 'annot')
 	  .attr('x', 40 + xs(medalsYr[0].Country_Name))
 	  .attr('y', 100 + ys(parseInt(medalsYr[0].Gold)))
 	  .attr('height', 30)
@@ -453,15 +462,17 @@ case "All" :
 	  .style('fill', 'red')
 	  
 	 g.append('text')
+	 .attr('id', 'annot')
 	  .text( '1')
 		.attr('x', 50 + xs(medalsYr[0].Country_Name))
-		.attr('y', 120 + ys(parseInt(medalsYr[0].AllGold))) 
+		.attr('y', 120 + ys(parseInt(medalsYr[0].Gold))) 
 		.attr('height', 30)
 		.attr("text-anchor", "center")
 		.style('stroke', 'black')
 		.style('fill', 'grey')
     
 		g.append('rect')
+		.attr('id', 'annot')
 		.attr('x', 40 + xs(medalsYr[1].Country_Name))
 		.attr('y', 100 + ys(parseInt(medalsYr[1].Gold)))
 		.attr('height', 30)
@@ -469,6 +480,7 @@ case "All" :
 		.style('fill', 'red')
 		
 	   g.append('text')
+	   .attr('id', 'annot')
 		.text( '2')
 		  .attr('x', 50 + xs(medalsYr[1].Country_Name))
 		  .attr('y', 120 + ys(parseInt(medalsYr[1].Gold))) 
@@ -478,6 +490,7 @@ case "All" :
 		  .style('fill', 'grey')
 
 		  g.append('rect')
+		  .attr('id', 'annot')
 		  .attr('x', 40 + xs(medalsYr[2].Country_Name))
 		  .attr('y', 100 + ys(parseInt(medalsYr[2].Gold)))
 		  .attr('height', 30)
@@ -485,6 +498,7 @@ case "All" :
 		  .style('fill', 'red')
 		  
 		 g.append('text')
+		 .attr('id', 'annot')
 		  .text( '3')
 			.attr('x', 50 + xs(medalsYr[2].Country_Name))
 			.attr('y', 120 + ys(parseInt(medalsYr[2].Gold))) 
@@ -493,6 +507,121 @@ case "All" :
 			.style('stroke', 'black')
 			.style('fill', 'grey')
 	break;
+	case "Silver":
+		medalsYr.sort(function(x,y){ return parseInt(y.Silver) - parseInt(x.Silver)})
+	console.log("medals sorted", medalsYr)
 
+	g.append('rect')
+	.attr('id', 'annot')
+	  .attr('x', 40 + xs(medalsYr[0].Country_Name))
+	  .attr('y', 100 + ys(parseInt(medalsYr[0].Silver)))
+	  .attr('height', 30)
+	  .attr('width', band + 20)
+	  .style('fill', 'red')
+	  
+	 g.append('text')
+	 .attr('id', 'annot')
+	  .text( '1')
+		.attr('x', 50 + xs(medalsYr[0].Country_Name))
+		.attr('y', 120 + ys(parseInt(medalsYr[0].Silver))) 
+		.attr('height', 30)
+		.attr("text-anchor", "center")
+		.style('stroke', 'black')
+		.style('fill', 'grey')
+    
+		g.append('rect')
+		.attr('id', 'annot')
+		.attr('x', 40 + xs(medalsYr[1].Country_Name))
+		.attr('y', 100 + ys(parseInt(medalsYr[1].Silver)))
+		.attr('height', 30)
+		.attr('width', band + 20)
+		.style('fill', 'red')
+		
+	   g.append('text')
+	   .attr('id', 'annot')
+		.text( '2')
+		  .attr('x', 50 + xs(medalsYr[1].Country_Name))
+		  .attr('y', 120 + ys(parseInt(medalsYr[1].Silver))) 
+		  .attr('height', 30)
+		  .attr("text-anchor", "center")
+		  .style('stroke', 'black')
+		  .style('fill', 'grey')
+
+		  g.append('rect')
+		  .attr('id', 'annot')
+		  .attr('x', 40 + xs(medalsYr[2].Country_Name))
+		  .attr('y', 100 + ys(parseInt(medalsYr[2].Silver)))
+		  .attr('height', 30)
+		  .attr('width', band + 20)
+		  .style('fill', 'red')
+		  
+		 g.append('text')
+		 .attr('id', 'annot')
+		  .text( '3')
+			.attr('x', 50 + xs(medalsYr[2].Country_Name))
+			.attr('y', 120 + ys(parseInt(medalsYr[2].Silver))) 
+			.attr('height', 30)
+			.attr("text-anchor", "center")
+			.style('stroke', 'black')
+			.style('fill', 'grey')
+	break;
+	case "Bronze":
+		medalsYr.sort(function(x,y){ return parseInt(y.Bronze) - parseInt(x.Bronze)})
+	console.log("medals sorted", medalsYr)
+
+	g.append('rect')
+	.attr('id', 'annot')
+	  .attr('x', 40 + xs(medalsYr[0].Country_Name))
+	  .attr('y', 100 + ys(parseInt(medalsYr[0].Bronze)))
+	  .attr('height', 30)
+	  .attr('width', band + 20)
+	  .style('fill', 'red')
+	  
+	 g.append('text')
+	 .attr('id', 'annot')
+	  .text( '1')
+		.attr('x', 50 + xs(medalsYr[0].Country_Name))
+		.attr('y', 120 + ys(parseInt(medalsYr[0].Bronze))) 
+		.attr('height', 30)
+		.attr("text-anchor", "center")
+		.style('stroke', 'black')
+		.style('fill', 'grey')
+    
+		g.append('rect')
+		.attr('id', 'annot')
+		.attr('x', 40 + xs(medalsYr[1].Country_Name))
+		.attr('y', 100 + ys(parseInt(medalsYr[1].Bronze)))
+		.attr('height', 30)
+		.attr('width', band + 20)
+		.style('fill', 'red')
+		
+	   g.append('text')
+	   .attr('id', 'annot')
+		.text( '2')
+		  .attr('x', 50 + xs(medalsYr[1].Country_Name))
+		  .attr('y', 120 + ys(parseInt(medalsYr[1].Bronze))) 
+		  .attr('height', 30)
+		  .attr("text-anchor", "center")
+		  .style('stroke', 'black')
+		  .style('fill', 'grey')
+
+		  g.append('rect')
+		  .attr('id', 'annot')
+		  .attr('x', 40 + xs(medalsYr[2].Country_Name))
+		  .attr('y', 100 + ys(parseInt(medalsYr[2].Bronze)))
+		  .attr('height', 30)
+		  .attr('width', band + 20)
+		  .style('fill', 'red')
+		  
+		 g.append('text')
+		 .attr('id', 'annot')
+		  .text( '3')
+			.attr('x', 50 + xs(medalsYr[2].Country_Name))
+			.attr('y', 120 + ys(parseInt(medalsYr[2].Bronze))) 
+			.attr('height', 30)
+			.attr("text-anchor", "center")
+			.style('stroke', 'black')
+			.style('fill', 'grey')
+	break;
 }
 }
