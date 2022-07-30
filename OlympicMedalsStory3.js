@@ -1,4 +1,4 @@
-const width = 1600;
+const width = 1800;
 const height = 600;
 const svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
 const g = svg.append('g');
@@ -155,7 +155,23 @@ async function drawSlides() {
 async function readData(yr, type) { 
 	const meds = await d3.csv("data/Summer_olympic_Medals.csv")
 	//console.log("Async Read 2020 data function", meds.filter(meds=>meds.Year == 2020 && meds.All != 0))
-	medalsYr = meds.filter(meds=>meds.Year == yr)
+	
+	switch (type) { 
+		case "All" :
+			medalsYr = meds.filter(meds=>meds.Year == yr && meds.All != "0")
+            break;
+		case "Gold" :
+			medalsYr = meds.filter(meds=>meds.Year == yr && meds.Gold != "0")
+           break;
+		case "Silver" :
+			medalsYr = meds.filter(meds=>meds.Year == yr && meds.Silver != "0")
+           break;
+		case "Bronze" :
+			medalsYr = meds.filter(meds=>meds.Year == yr && meds.Bronze != "0")
+            break;
+
+	}
+	//medalsYr = meds.filter(meds=>meds.Year == yr)
 	console.log("medalsYr", medalsYr)
 	console.log("readData- type", type)
 	console.log("readData- year", yr)
@@ -166,37 +182,26 @@ function drawChartAll(medalsYr, type) {
 	
 	console.log("medalsYrDrawChart", medalsYr)
 	console.log("type = ", type);
-	
-    var medalsYrSorted
 
 	switch (type) { 
 		case "All" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.All)})
-            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(y.All) - parseInt(x.All));})
-			break;
+            break;
 		case "Gold" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.Gold)})
-            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(y.Gold) - parseInt(x.Gold));})
-			break;
+           break;
 		case "Silver" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.Silver)})
-            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(y.Silver) - parseInt(x.Silver));})
-			break;
+           break;
 		case "Bronze" :
 			wMax = d3.extent(medalsYr, function(d) {return  parseInt(d.Bronze)})
-            medalsYrSorted = medalsYr.sort(function(x, y){return (parseInt(y.Bronze) - parseInt(x.Bronze));})
-			break;
+            break;
 
 	}
 
 	console.log("medalsYr.All", wMax)
-    console.log("medalsYr.Sorted", medalsYrSorted)
 	countries =  [...new Set(medalsYr.map(({Country_Name})=>Country_Name))]
 	console.log("countries = ", countries.sort());
-
-
-	//var top3 = [medalsYrSorted[0], medalsYrSorted[1], medalsYrSorted[2]]
-    //console.log("top3", top3)
 	
 
 	var ys=d3.scaleLinear()
@@ -207,7 +212,7 @@ function drawChartAll(medalsYr, type) {
 
 	var xs=d3.scaleBand()
 				.domain(countries.sort())
-				.range([0, width])
+				.range([0, width-100])
     			.paddingInner([.1]);
 	band = xs.bandwidth();
 
@@ -384,8 +389,17 @@ function drawChartAll(medalsYr, type) {
     		.attr("transform", "rotate(90)")
     		.style("text-anchor", "start");
 
+   
+	medalsYr.sort(function(x,y){ return parseInt(y.All) - parseInt(x.All)})
+	console.log("medals sorted", medalsYr)
 
-	
-
+	g.append('rect')
+	  .attr('x', 40 + xs(medalsYr[0].Country_Name))
+	  .attr('y', 100 + ys(parseInt(medalsYr[0].All)))
+	  .attr('height', 30)
+	  .attr('width', band + 20)
+	  .style('fill', 'red')
+	  .append('text')
+	  .attr('text', '1')
    
 }
